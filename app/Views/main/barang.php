@@ -1,5 +1,6 @@
 <table class="table table-hover box tmpl" id="stock">
-    <div class="btn btn-inline-primary tmpl insert-stock" id="insert-stock">+ Stok</div>
+    <!-- <div class="btn btn-inline-primary tmpl insert-stock" id="insert-stock">+ Stok</div> -->
+	<button type="button" class="btn btn-inline-primary insert-stock" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Tambahkan stok</button>
 	<thead>
         <th>No</th>
         <th>Name</th>
@@ -15,3 +16,4 @@
         <?php $no++; endforeach; ?>
 	</tbody>
 </table>
+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
