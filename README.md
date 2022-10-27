@@ -1,0 +1,2 @@
+# inventory
+hanya projek personal
