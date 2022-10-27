@@ -49,4 +49,9 @@
 #form{
     display: none;
 }
-
+.trash{
+    width:10px 
+}
+.edit{
+    width:65px
+}

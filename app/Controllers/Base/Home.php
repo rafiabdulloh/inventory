@@ -67,7 +67,7 @@ class Home extends BaseController
                 "deskripsi"=>$deskripsi
             ]);
             if($do_insert){ 
-                $stock->save([
+                $stock->update($get_stock['id'],[
                     "stok" =>$get_stock['stok']+$qty
                 ]);
             }
@@ -79,18 +79,7 @@ class Home extends BaseController
         };
  
     }
-    
-
-    public function insert_brg_msk($stok)
-    {
-        //insert ke barang masuk dari form barnag masuk
-        //segaligus
-        //update data qty ke stock
-        //validasi
-        //ambil inputan qty lalu tambahkan dengan stok      
-
-    }
-    
+        
     public function delete_brg()
     {
         $id=$this->request->getPost('id');
@@ -107,6 +96,16 @@ class Home extends BaseController
         return view('main/home');
         
              
+    }
+
+    public function delete()
+    {
+        $id=$this->request->getPost('id');
+        $stock = new Stok();
+        $stock->delete($id);
+        
+        return redirect('inventor');
+
     }
 }
 

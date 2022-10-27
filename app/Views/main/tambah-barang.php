@@ -21,7 +21,7 @@
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">New asdfmessage</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -44,7 +44,8 @@
                     <input placeholder="Masukan angka" class="form-control" type="number" name="qty" id="total" required>
 	            </div>
 	            <label for="recipient-name" class="col-form-label">Satuan:</label>
-                <select name="alias" id="" class="select form-group col-form-label form-control">
+                <select name="satuan" id="" class="select form-group col-form-label form-control">
+                <option value="" selected disabled hidden>-- Pilih satuan --</option>
                     <option value="kg">Kilogram</option>
                     <option value="pcs">Pack</option>
                 </select>
@@ -52,11 +53,11 @@
 	              <label for="message-text" class="col-form-label">Deskripsi</label>
                     <textarea class="form-control" placeholder="masukan deskripsi disini..." type="number" name="deskripsi"></textarea>
 	            </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" id="submit" type="submit" name="submit" value="Send">Send</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
 	        </form>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <input class="btn btn-primary" id="submit" type="submit" name="submit" value="kirim">Send message</input>
 	      </div>
 	    </div>
 	  </div>
