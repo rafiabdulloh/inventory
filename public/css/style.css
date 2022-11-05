@@ -1,5 +1,8 @@
 .bg-clr{
     background-color:teal;
+    position: fixed;
+    width: 100%;
+    z-index: 99999;
 }
 .table{
     text-align: -webkit-center;
@@ -40,18 +43,102 @@
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     margin-bottom: 60px;
 }
-.insert-stock{
+.insert{
     float:right;
     margin-bottom: 10px;
-    background-color: #e61a1a !important;
+    background-color: #1a79e6 !important;
     color: white  !important;
+}
+.insert-barang{
+    background-color: #f75137 !important;
+    color: white  !important;
+    float:right;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 #form{
     display: none;
 }
 .trash{
-    width:10px 
+    width:10px;
+    direction: rtl;
 }
 .edit{
     width:65px
+}
+.footer{
+    /* text-align: center; */
+    background-color: teal !important;
+    color: white !important;
+}
+.p{
+    padding-left: 20px;
+    text-align: justify;
+    padding-left: 20px;
+    width:60vh;
+
+}
+.tr-p{
+    padding-left:20px ;
+    padding-top:20px ;
+    font-weight: bold;
+    font-size: 50px;
+}
+.icon{
+    padding-left:20px ;
+    padding-top:20px ;
+    padding:20px ;
+}
+.icon-fb{
+    width:60vh;
+    padding: 20px;
+}
+.link-fb{
+    color: white !important;
+}
+.kirim{
+    background-color: #1a79e6 !important;
+    color: white !important;
+}
+.bi-trash{
+    color:#e51e1e !important;
+}
+.bi-pencil{
+    color: #1a79e6 !important;
+    position: absolute;
+}
+.icon-history{
+    direction: rtl;
+}
+.red{
+    color: red;
+}
+.tmbh-stok{
+    margin:10px;
+    float:right;
+    background-color: #1a79e6 !important;
+    color: white  !important;
+}
+.tmbh-barang{
+    background-color: #f75137 !important;
+    color: white  !important;
+    float:right;
+    margin:10px;
+    
+}
+.kirim-barang{
+    background-color: #1a79e6 !important;
+    color: white !important;
+    margin:10px;
+
+}
+.parent{
+    padding-top:20px !important;
+    padding-left:60px !important;
+    padding-right:60px !important;
+    margin-top:150px;
+}
+.sidebar{
+    height: 100vh;
+    margin-top:58px
 }

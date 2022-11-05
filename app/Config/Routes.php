@@ -38,10 +38,16 @@ $routes->set404Override();
 // $routes->get('/', 'Home::index');
 $routes->get('/ci', 'Home::index');
 $routes->add('/inventor', 'Base\Home::barang');
-$routes->add('/add', 'Base\Home::add_barang');
+$routes->add('/add', 'Base\Home::add_stok');
 $routes->post('/delete', 'Base\Home::delete_brg');
-
-
+$routes->add('/delete/stock/(:num)', 'Base\Home::delete/$1');
+$routes->post('/add/barang/baru', 'Base\Home::add_barang_baru');
+$routes->add('/edit/stok/(:num)', 'Base\Home::update_stok_brg/$1');
+$routes->add('/inventor/pengiriman', 'Base\Home::pengiriman');
+$routes->add('/kirim/barang', 'Base\Home::kirim');
+$routes->add('/status/pengiriman/(:num)', 'Base\Home::status_pengiriman/$1');
+$routes->add('/inventor/catatan/laporan', 'Base\Home::catatan_laporan');
+$routes->add('/inventor/barang/keluar', 'Base\Home::barang_keluar');
 
 
 /*

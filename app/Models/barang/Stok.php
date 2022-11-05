@@ -9,14 +9,10 @@ class Stok extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['alias', 'date_created', 'stok'];
+    protected $allowedFields = ['id','alias', 'date_created', 'qty'];
 
-    // public function upt_sum($alias)
-    // {
-
-    //     $data = $this->stok_barang()->find('stok');
-        
-    // }
-
-
+    public function id()
+    {
+        return $this->where('id');
+    }
 }
