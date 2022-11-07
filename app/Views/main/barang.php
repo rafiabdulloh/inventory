@@ -31,7 +31,7 @@
         <?php $no=1; foreach($stokBarang as $brg):?>
     <tr>
 		<td><?= $no ?></td>
-		<td><?= $brg['alias']?></td>
+		<td style="text-transform:capitalize"><?= $brg['alias']?></td>
 		<td><?= $brg['qty']?></td>
 		<td class="trash">
             <a href="/delete/stock/<?= $brg['id']?>" style="color:#e61a1a">

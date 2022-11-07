@@ -82,11 +82,11 @@ $(document).delegate("#dlt-brg", "click", function () {
   });
 });
 
-$(document).ready(function () {
-  $("#barang").click(function () {
-    $(".tmpl").toggle();
-  });
-});
+// $(document).ready(function () {
+//   $("#barang").click(function () {
+//     $(".tmpl").toggle();
+//   });
+// });
 
 $(document).ready(function () {
   $("#insert-stock").click(function () {
@@ -123,25 +123,47 @@ $('#edit-stok').on('show.bs.modal', function(e) {
   var a = $(e.relatedTarget) // Button that triggered the modal
   var alias = a.data('alias');
   var stok = a.data('stok');
-  var kutip =('"')
   var id = a.data('id');
   var modal = $(this);
-  var update_alias = $("#alias").val();
-  var update_stok = $("#stok").val();
-  let string = "<form action=\"/edit/stok/\" method=\"post\">";
-  let newString = string.replace(/action=\".*\"/, 'action=\"/edit/stok/'+id+kutip,'\"');
 
   $('#myform').attr('action','/edit/stok/'+id)
   modal.find('.alias').val(alias)
   modal.find('.stok').val(stok)
 
-
-
-// console.log(string);
-
-
+  // var kutip =('"')
+  // var update_alias = $("#alias").val();
+  // var update_stok = $("#stok").val();
+  // let string = "<form action=\"/edit/stok/\" method=\"post\">";
+  // let newString = string.replace(/action=\".*\"/, 'action=\"/edit/stok/'+id+kutip,'\"');
+  
+  
+  
+  // console.log(string);
+  
+  
   //populate the textbox
 });
+
+// edit barang
+$('#edit-barang').on('show.bs.modal', function(e){
+  var a = $(e.relatedTarget);
+  var id = a.data('id');
+  var alias = a.data('alias');
+  var qty = a.data('qty');
+  var satuan = a.data('satuan');
+  var created_by = a.data('created_by');
+  var deskripsi = a.data('deskripsi');
+  var modal = $(this);
+
+  $('#formEdit').attr('action','/edit/barang/'+id);
+  modal.find('.alias').val(alias)
+  modal.find('.qty').val(qty)
+  modal.find('.satuan').val(satuan)
+  modal.find('.created_by').val(created_by)
+  modal.find('.deskripsi').val(deskripsi)
+});
+
+
 
 $('#exampleModal').on('show.bs.modal', function (event) {
   $(e.currentTarget).find('a[name="bookId"]').val(bookId);
@@ -152,4 +174,5 @@ $('#exampleModal').on('show.bs.modal', function (event) {
   var modal = $(this)
   modal.find('.modal-title').text('New message to ' + recipient)
   modal.find('.modal-body input').val(recipient);
-})
+});
+

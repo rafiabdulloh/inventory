@@ -9,6 +9,6 @@ class Barang extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['name', 'created_by', 'qty', 'satuan', 'deskripsi', 'date_created'];
+    protected $allowedFields = ['alias', 'created_by', 'qty', 'satuan', 'deskripsi', 'date_created'];
 
 }

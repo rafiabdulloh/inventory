@@ -37,7 +37,7 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 // $routes->get('/', 'Home::index');
 $routes->get('/ci', 'Home::index');
-$routes->add('/inventor', 'Base\Home::barang');
+$routes->add('/inventor', 'Base\Home::home');
 $routes->add('/add', 'Base\Home::add_stok');
 $routes->post('/delete', 'Base\Home::delete_brg');
 $routes->add('/delete/stock/(:num)', 'Base\Home::delete/$1');
@@ -48,6 +48,12 @@ $routes->add('/kirim/barang', 'Base\Home::kirim');
 $routes->add('/status/pengiriman/(:num)', 'Base\Home::status_pengiriman/$1');
 $routes->add('/inventor/catatan/laporan', 'Base\Home::catatan_laporan');
 $routes->add('/inventor/barang/keluar', 'Base\Home::barang_keluar');
+$routes->add('/inventor/penerimaan', 'Base\Home::penerimaan');
+$routes->add('/tambah/penerimaan', 'Base\Home::tambah_penerimaan');
+$routes->add('/delete/penerimaan/(:num)', 'Base\Home::dlt_penerimaan/$1');
+$routes->add('/inventor/barang', 'Base\Home::barang');
+$routes->add('/inventor/barang/masuk', 'Base\Home::barang_masuk');
+$routes->add('/edit/barang/(:num)', 'Base\Home::edit_brg_to_stok/$1');
 
 
 /*

@@ -9,7 +9,7 @@ class Stok extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['id','alias', 'date_created', 'qty'];
+    protected $allowedFields = ['alias', 'date_created', 'qty'];
 
     public function id()
     {

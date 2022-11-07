@@ -13,15 +13,15 @@
 	<link rel="stylesheet" href=<?= base_url('/css/bootstrap.min.sdb.css')?>>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
-<?= $this->include('pengiriman/navbar')?>
+<?=$this->include('main/navbar')?>
 <body>
 		<div>
 			<div class="row" style="flex-flow: row; margin:0px">
 				<div>
 					<?= $this->include('main/sidebar') ?>
 				</div>
-				<div id="content" style="padding-top:20px; padding-left:60px; padding-right:60px" >
-                <h1>Laporan dari Pengiriman Barang</h1>
+				<div id="content" style="padding-top:20px; padding-left:60px; padding-right:60px; margin-top:60px" >
+                <h1>Barang Keluar</h1>
                    <table class="table-bordered table table-hover box">
                     <thead>
                         <th>No</th>
@@ -54,6 +54,7 @@
                    </table>
 			</div>
 		</div>
+		<?= $this->include('main/footer')?>
     </body>
         <script src=<?= base_url('js/font-icon.js')?>></script>
         <script src=<?= base_url('js/jquery.min.sdb.js')?>></script>

@@ -2,7 +2,7 @@
     background-color:teal;
     position: fixed;
     width: 100%;
-    z-index: 99999;
+    z-index: 2;
 }
 .table{
     text-align: -webkit-center;
@@ -136,9 +136,22 @@
     padding-top:20px !important;
     padding-left:60px !important;
     padding-right:60px !important;
-    margin-top:150px;
+    margin-top:60px;
 }
 .sidebar{
     height: 100vh;
     margin-top:58px
+}
+.profil{
+    right:2px;
+    position: absolute  ;
+}
+.font-profil{
+    color:white;
+    position: relative;
+    top: 3px;
+}
+.btn-sidebar{
+    position:absolute !important;
+    top: 21px !important;
 }

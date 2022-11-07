@@ -5,9 +5,12 @@ use App\Models\barang\Barang;
 use App\Models\barang\Stok;
 use App\Models\barang\Pengiriman;
 use App\Models\barang\CatatanLaporan;
+use App\Models\barang\Penerimaan;
 use App\Models\barang\BarangKeluar;
 use App\Controllers\BaseController;
 use CodeIgniter\CLI\Console;
+use CodeIgniter\Router\Router;
+use CodeIgniter\Validation\Validation;
 
 class Home extends BaseController
 {
@@ -20,7 +23,7 @@ class Home extends BaseController
         echo json_encode($msg);
         exit;
     }
-    public function barang()
+    public function home()
     {
 
         $stok = new Stok;
@@ -36,7 +39,19 @@ class Home extends BaseController
         $data['barang']=$barang->findAll();
         echo view('main/home', $data, $data, $data, $data, $data);
     }
+    
+    public function barang()
+    {
 
+        $stok = new Stok;
+        $barang = new Barang();
+        $data['barang'] = $barang->findAll();
+        $data['stokBarang']=$stok->findAll();
+
+
+        echo view('barang/home', $data, $data);
+
+    }
 
     public function tambahBarang()
     {
@@ -45,7 +60,7 @@ class Home extends BaseController
         $data['total'] = $this->request->getPost('total');
         // return json_encode($data);
         // exit;
-        $this->barang();
+        $this->home();
         return view('main/home',$data);
         
     }
@@ -68,7 +83,7 @@ class Home extends BaseController
             $barang = new Barang;
             $get_stock = $stock->where('alias', $alias)->first();
             $do_insert = $barang->insert([
-                "name"=>$name,
+                // "alias"=>$name,
                 "alias"=>$alias,
                 "created_by"=>$created_by,
                 "qty"=>$qty,
@@ -94,7 +109,7 @@ class Home extends BaseController
         $barang = new Barang;
         $stok_barang = new Stok();
         $id=$this->request->getPost('id');
-        $name=$this->request->getPost('name');
+        $name=$this->request->getPost('alias');
         $qty=$this->request->getPost('qty');
         $get_stok=$stok_barang->where('alias',$name);
         // $qty=$barang->where('qty',$id);
@@ -120,16 +135,13 @@ class Home extends BaseController
              
     }
 
-    public function delete($data)
+    public function delete($id)
     
     {
-        $stock = new Stok;
-        $id = $stock->where('id', $data)->first();
-        // return json_encode($id);
-        // exit;
-        $stock->delete($id);
-        return redirect('inventor');
+        $stok = new Stok;
+        $stok->delete($id);
 
+        return redirect('inventor/barang');
 
 
         // $model = model(Stok::class);
@@ -162,7 +174,7 @@ class Home extends BaseController
         };
         if($isvalid){
             $barang->insert([
-                "name"=>$name,
+                "alias"=>$alias,
                     "created_by"=>$created_by,
                     "qty"=>$qty,
                     "satuan"=>$satuan,
@@ -171,13 +183,13 @@ class Home extends BaseController
             ]);
         }
         
-        return redirect('inventor');
+        return redirect('inventor/barang');
     }
 
     public function update_stok_brg($id)
     {
         $stok = new Stok();
-        $data['id'] = $stok->where('id', $id)->first();
+        // $data['id'] = $stok->where('id', $id)->first();
         $validation =  \Config\Services::validation();
         $validation->setRules([
       'alias' => 'required',
@@ -189,9 +201,9 @@ class Home extends BaseController
             "alias" => $this->request->getPost('alias'),
             "qty" => $this->request->getPost('qty'),
         ]);
-            return redirect('inventor');
-
-        }
+        // tanda
+    }
+    return redirect('inventor/barang');
 
     }
 
@@ -199,8 +211,11 @@ class Home extends BaseController
     {
         $pengiriman = new Pengiriman();
         $data['pengiriman']= $pengiriman->findAll();
+        $stok = new Stok;
+        $data['stokBarang']=$stok->findAll();
 
-        echo view('pengiriman/home', $data);
+
+        echo view('pengiriman/home', $data, $data);
     }
     
     public function kirim()
@@ -217,8 +232,8 @@ class Home extends BaseController
         $satuan=$this->request->getPost('satuan');
         $tujuan=$this->request->getPost('tujuan');
         $deskripsi=$this->request->getPost('deskripsi');
+        $get_stock = $stock->where('alias', $alias)->first();
         if($isvalid){
-            $get_stock = $stock->where('alias', $alias)->first();
             $do_insert = $barang_keluar->insert([
                 "alias"=>$alias,
                 "qty"=>$qty,
@@ -271,7 +286,10 @@ class Home extends BaseController
     {
         $catatan_laporan = new CatatanLaporan();
         $data['laporan']= $catatan_laporan->findAll();
-        echo view('laporan/catatan_laporan', $data);
+        $stok = new Stok;
+        $data['stokBarang']=$stok->findAll();
+
+        echo view('laporan/catatan_laporan', $data, $data);
     }
     public function barang_keluar()
     {
@@ -280,7 +298,114 @@ class Home extends BaseController
 
         echo view('barang_keluar/barang_keluar', $data);
     }
+
+    public function penerimaan()
+    {
+        $penerimaan = new Penerimaan();
+        $data['penerimaan']=$penerimaan->findAll();
+        $stok = new Stok;
+        $data['stokBarang']=$stok->findAll();
+
+        return view('penerimaan/penerimaan', $data, $data);
+    }
+
+    public function tambah_penerimaan()
+    {
+        $penerimaan = new Penerimaan();
+        $validation = \Config\Services::validation();
+        $validation->setRules(['alias' => 'required']);
+        $valid = $validation->withRequest($this->request)->run();
+
+
+        $alias = $this->request->getPost('alias');
+        $qty = $this->request->getPost('qty');
+        $satuan = $this->request->getPost('satuan');
+        $from = $this->request->getPost('from');
+        $harga = $this->request->getPost('harga');
+
+        if($valid){
+            $penerimaan->insert([
+                "alias" => $alias,
+                "qty" => $qty,
+                "satuan" => $satuan,
+                "from" => $from,
+                "harga" => $harga,
+            ]);
+        }
+        return redirect('inventor/penerimaan');
+    }
+
+    public function dlt_penerimaan($id)
+    {
+        $penerimaan = new Penerimaan();
+        $penerimaan->delete($id);
+
+        return redirect('inventor/penerimaan');
+
+    }
+
+    public function barang_masuk()
+    {
+        $barang = new Barang();
+        $data['barang'] = $barang->findAll();
+        $stok = new Stok;
+        $data['stokBarang']=$stok->findAll();
+
+
+        echo view('barang_masuk/home', $data, $data);
+    }
+
+    public function edit_brg_to_stok($id)
+    {
+
+        $barang = new Barang();
+        // $data['id'] = $stok->where('id', $id)->first();
+        $validation =  \Config\Services::validation();
+        $validation->setRules([
+      'alias' => 'required',
+      'qty' => 'required',
+        ]);
+        
+        $alias = $this->request->getPost('alias');
+        $qty = $this->request->getPost('qty');
+        $created_by = $this->request->getPost('created_by');
+        $satuan = $this->request->getPost('satuan');
+        $deskripsi = $this->request->getPost('deskripsi');
+        
+        $stok = new Stok();
+        $qty_brg = $barang->where('id' , $id)->first();
+        $get_stok = $stok->where('alias', $alias)->first();
+        $stok_brg = $get_stok['qty'];
+        $id_stok = $get_stok['qty'];
+        // return json_encode($qty_brg['qty']);
+
+        $isDataValid = $validation->withRequest($this->request)->run();
+        if($isDataValid){
+        $barang->update($id, [
+            "alias" => $alias,
+            "qty" => $qty,
+            "satuan" => $satuan,
+            "created_by" => $created_by,
+            "deskripsi" => $deskripsi,
+            
+        ]);
+        
+        if($stok_brg > $qty){
+            $stok->update($get_stok['id'],[
+                "qty" => $get_stok['qty']-($qty_brg['qty'] - $qty)
+            ]);
+        }
+        if($stok_brg < $qty){
+            $stok->update($get_stok['id'],[
+                "qty" => $get_stok['qty']+($qty - $qty_brg['qty'])
+            ]);
+        }
+        
+        }
+        return redirect('inventor/barang/masuk');
+    }
 }
+
 
 
     

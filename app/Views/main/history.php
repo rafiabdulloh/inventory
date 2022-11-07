@@ -1,4 +1,4 @@
-<div id="history-barang" class="box" >
+<div id="history-barang" class="box" style="display:none" >
     <h1 class="h1" style="padding:20px; margin-top: 0">History barang masuk</h1>
     <table class="table table-striped table-hover" id="table" cellspacing="0" width="100%">
           <thead>
@@ -17,7 +17,7 @@
                 <?php $no=1; foreach($barang as $a):?>
                 <tr>
                     <td scope="row"><?= $no ?></td>
-                    <td scope="row"><?= $a['name']?></td>
+                    <td scope="row"><?= $a['alias']?></td>
                     <td scope="row"><?= $a['created_by']?></td>
                     <td scope="row"><?= $a['qty']?></td>
                     <td scope="row"><?= $a['satuan']?></td>

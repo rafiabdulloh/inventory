@@ -21,31 +21,41 @@
 				<?= $this->include('main/sidebar') ?>
 			</div>
 			<div id="content" style="padding-top:20px; padding-left:60px; padding-right:60px; margin-top:60px" >
-                <h1>Pengiriman</h1>
-                <table class="table-bordered table table-hover box">
-                    <thead>
-                        <th>No</th>
+            <h1>Penerimaan
+                <a data-toggle="modal" data-target="#penerimaan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                    </svg>
+                </a>
+            </h1>
+            <table class="table-bordered table table-hover box">
+                <thead>
+                    <th>No</th>
                         <th>Name</th>
                         <th>Jumlah</th>
                         <th>Satuan</th>
-                        <th>Tujuan</th>
-                        <th>Deskripsi</th>
+                        <th>Barang dari</th>
+                        <th>Harga</th>
                         <th>Tanggal</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <?php $no=1; foreach($pengiriman as $dist):?>
+                        <?php $no=1; foreach($penerimaan as $pen):?>
                         <tr>
                             <td><?= $no?></td>
-                            <td style="text-transform:capitalize"><?= $dist['alias']?></td>
-                            <td><?= $dist['qty']?></td>
-                            <td><?= $dist['satuan']?></td>
-                            <td style="text-transform:capitalize"><?= $dist['tujuan']?></td>
-                            <td><?= $dist['deskripsi']?></td>
-                            <td><?= $dist['date_created']?></td>
+                            <td style="text-transform:capitalize"><?= $pen['alias']?></td>
+                            <td><?= $pen['qty']?></td>
+                            <td><?= $pen['satuan']?></td>
+                            <td><?= $pen['from']?></td>
+                            <td><?= $pen['harga']?></td>
+                            <td><?= $pen['date_created']?></td>
                             <td>
-                                <a href="/status/pengiriman/<?= $dist['id']?>" class="btn btn-inline-primary">
-                                    Selesai
+                                <a href="/delete/penerimaan/<?= $pen['id']?>" class="">
+                                    Delete
+                                </a>
+                                <a href="#" class="btn btn-inline-primary">
+                                    Edit
                                 </a>
                             </td>
                         </tr>
@@ -73,3 +83,5 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="//code.jquery.com/jquery.min.js"></script>
 </html>
+
+

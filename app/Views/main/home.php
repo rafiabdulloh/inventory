@@ -10,8 +10,8 @@
 		<link rel="stylesheet" href="/css/style.sdb.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	</head>
+	<?=$this->include('main/navbar')?>
 	<body>
-		<?=$this->include('main/navbar')?>
 		<div>
 			<div class="row" style="flex-flow: row; margin:0px; width:100%">
 				<div>
@@ -21,25 +21,27 @@
 					<div class="table">
 						<table>
 							<th rowspan="2" id="" class="penerimaan">
-								<!-- <img src="image/keranjang.png" alt="" width="60px" height="60px"> -->
-								<i style='font-size:50px' class='fas'>&#xf07a;</i>
-
-								<td class="penerimaan">
-									<a href="#" style="color:black">penerimaan
-								</td>
-								<td class="penerimaan">0</td>
+								<a href="/inventor/penerimaan" style="color:black">
+									<!-- <img src="image/keranjang.png" alt="" width="60px" height="60px"> -->
+									<i style='font-size:50px' class='fas'>&#xf07a;</i>
+										<td class="penerimaan">
+											<a href="/inventor/penerimaan" style="color:black">penerimaan</a>
+										</td>
+										<td class="penerimaan">0</td>
+								</a>
 							</th>
 							<th rowspan="2" id="barang" class="barang">
+								<a href="/inventor/barang" style="color:black">
 									<!-- <img src="image/barang.png" alt="" width="60px" height="60px"> -->
 									<i style='font-size:50px' class='fas'>&#xf1b2;</i>
-
 									<td class="barang">
-									<a href="#" style="color:black">Barang
+									<a href="/inventor/barang" style="color:black">Barang
 									</td>
 									<td class="barang"><?= count($stokBarang)?></td>	
+								</a>
 							</th>
 							<th rowspan="2" id="" class="pengiriman">
-								<a href="/inventor/pengiriman">
+								<a href="/inventor/pengiriman" style="color:black">
 									<!-- <img src="image/mobil.png" alt="" width="60px" height="60px"> -->
 									<i style='font-size:50px' class='fas'>&#xf0d1;</i>
 
@@ -50,7 +52,7 @@
 								</a>
 							</th>
 							<th rowspan="2" id="" class="list">
-								<a href="/inventor/catatan/laporan">
+								<a href="/inventor/catatan/laporan" style="color:black">
 									<!-- <img src="image/catatan.png" alt="" width="60px" height="60px"> -->
 									<i style='font-size:50px' class='fas'>&#xf0ae;</i>
 									<td class="list">
@@ -65,14 +67,9 @@
 						<?= $this->include('main/tambah-barang')?>
 					</div>
 					<?= $this->include('main/history')?>
-					<div>
-						<?= $this->include('main/barang')?>
-					</div>
 				</div>
 			</div>
 		</div>
-		<?= $this->include('pengiriman/kirim')?>
-		<!--  -->
 		<?= $this->include('main/footer')?>
 	</body>
 		<script src="js/jquery.min.sdb.js"></script>
