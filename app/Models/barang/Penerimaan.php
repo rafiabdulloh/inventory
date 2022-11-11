@@ -9,6 +9,6 @@ class Penerimaan extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['alias', 'qty', 'harga', 'satuan', 'from', 'date_created'];
+    protected $allowedFields = ['alias', 'qty', 'harga', 'satuan', 'from', 'date_created', 'status'];
 
 }

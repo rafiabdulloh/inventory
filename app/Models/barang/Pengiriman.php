@@ -9,6 +9,6 @@ class Pengiriman extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['alias', 'qty', 'tujuan', 'satuan', 'deskripsi', 'date_created'];
+    protected $allowedFields = ['alias', 'qty', 'tujuan', 'satuan', 'deskripsi', 'date_created', 'status'];
 
 }

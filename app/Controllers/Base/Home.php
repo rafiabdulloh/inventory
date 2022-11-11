@@ -7,8 +7,10 @@ use App\Models\barang\Pengiriman;
 use App\Models\barang\CatatanLaporan;
 use App\Models\barang\Penerimaan;
 use App\Models\barang\BarangKeluar;
+use App\Models\barang\Lokasi;
 use App\Controllers\BaseController;
 use CodeIgniter\CLI\Console;
+use CodeIgniter\Debug\Toolbar\Collectors\Logs;
 use CodeIgniter\Router\Router;
 use CodeIgniter\Validation\Validation;
 
@@ -31,13 +33,17 @@ class Home extends BaseController
         $pengiriman = new Pengiriman();
         $catatan_laporan = new CatatanLaporan();
         $barang_keluar = new BarangKeluar();
+        $penerimaan = new Penerimaan();
+        $lokasi = new Lokasi();
 
+        $data['penerimaan'] = $penerimaan->findAll();
         $data['barang-keluar']= $barang_keluar->findAll();
         $data['laporan']= $catatan_laporan->findAll();
         $data['pengiriman']= $pengiriman->findAll();
         $data['stokBarang']=$stok->findAll();
         $data['barang']=$barang->findAll();
-        echo view('main/home', $data, $data, $data, $data, $data);
+        $data['lokasi']=$lokasi->findAll();
+        echo view('main/home', $data, $data, $data, $data, $data, $data);
     }
     
     public function barang()
@@ -45,11 +51,14 @@ class Home extends BaseController
 
         $stok = new Stok;
         $barang = new Barang();
+        $lokasi = new Lokasi();
+
+        $data['lokasi']=$lokasi->findAll();
         $data['barang'] = $barang->findAll();
         $data['stokBarang']=$stok->findAll();
 
 
-        echo view('barang/home', $data, $data);
+        echo view('barang/home', $data, $data, $data);
 
     }
 
@@ -210,12 +219,16 @@ class Home extends BaseController
     public function pengiriman()
     {
         $pengiriman = new Pengiriman();
-        $data['pengiriman']= $pengiriman->findAll();
         $stok = new Stok;
+        $lokasi = new Lokasi();
+
+        $data['pengiriman']= $pengiriman->findAll();
         $data['stokBarang']=$stok->findAll();
+        $data['lokasi']=$lokasi->findAll();
 
 
-        echo view('pengiriman/home', $data, $data);
+
+        echo view('pengiriman/home', $data, $data, $data);
     }
     
     public function kirim()
@@ -233,80 +246,110 @@ class Home extends BaseController
         $tujuan=$this->request->getPost('tujuan');
         $deskripsi=$this->request->getPost('deskripsi');
         $get_stock = $stock->where('alias', $alias)->first();
-        if($isvalid){
-            $do_insert = $barang_keluar->insert([
-                "alias"=>$alias,
-                "qty"=>$qty,
-                "satuan"=>$satuan,
-                "tujuan"=>$tujuan,
-                "deskripsi"=>$deskripsi
-            ]);
-            if($do_insert){ 
-                $stock->update($get_stock['id'],[
-                    "qty" =>$get_stock['qty']-$qty
-                ]);
-            };
-            if($isvalid){
-                $barang->insert([
+        $stok_stok = $get_stock['qty'];
+
+            if($qty<=$stok_stok && $isvalid){               //hanya tereksekusi jika stok barang ada atau cukup
+                $do_insert = $barang->insert([
                     "alias"=>$alias,
                     "qty"=>$qty,
                     "satuan"=>$satuan,
                     "tujuan"=>$tujuan,
                     "deskripsi"=>$deskripsi
                 ]);
-            }
-           
-            // return json_encode($get_stock['id']);
-            // exit;
-            return redirect('inventor');
-        }else{
-            echo "data tidak valid";
-        };
+                
+                if($do_insert){ 
+                        $stock->update($get_stock['id'],[
+                            "qty" =>$get_stock['qty']-$qty
+                        ]);
+                    };
+                    
+            }else{
+                // belum ada peringatan stok kurang
+                return redirect('inventor/barang');
+            };
+
+            return redirect('inventor/pengiriman');
+        
  
     }
 
+    // accept pengiriman
     public function status_pengiriman($id)
     {
         $catatan_laporan = new CatatanLaporan();
-
         $pengiriman = new Pengiriman();
-        $id = $pengiriman->where('id', $id)->first();
+        $barang_keluar = new BarangKeluar();
         // return json_encode($id);
-        $do_delete=$pengiriman->delete($id);
-        if($do_delete){
-            $catatan_laporan->insert($id);
-        }
+
         
-        // buat query delete
-        // buat query insert ke database laporan
-        return redirect('inventor/catatan/laporan');
+        $get_status = $pengiriman->where('id', $id)->first();
+
+        $doFor_status = $pengiriman->update($get_status['id'],["status" => 1]);      
+
+        if($doFor_status)
+        {
+            $catatan_laporan->insert([
+                'alias'=> $get_status['alias'],
+                'qty'=> $get_status['qty'],
+                'satuan'=> $get_status['satuan'],
+                'tujuan'=> $get_status['tujuan'],
+                'deskripsi'=> $get_status['deskripsi'],
+                'status' => 1
+            ]);
+            $barang_keluar->insert([
+                'alias'=> $get_status['alias'],
+                'qty'=> $get_status['qty'],
+                'satuan'=> $get_status['satuan'],
+                'tujuan'=> $get_status['tujuan'],
+                'deskripsi'=> $get_status['deskripsi'],
+            ]);
+
+
+            $this->returnJson(array('status' => 'ok'));
+        }else
+            {
+                $this->returnJson(array('status' => 'false'));
+            };   
+        
+        return redirect('inventor/pengiriman');
     }
     
     public function catatan_laporan()
     {
         $catatan_laporan = new CatatanLaporan();
-        $data['laporan']= $catatan_laporan->findAll();
+        $lokasi = new Lokasi();
         $stok = new Stok;
-        $data['stokBarang']=$stok->findAll();
 
-        echo view('laporan/catatan_laporan', $data, $data);
+        $data['laporan']= $catatan_laporan->findAll();
+        $data['stokBarang']=$stok->findAll();
+        $data['lokasi']=$lokasi->findAll();
+        
+        echo view('laporan/catatan_laporan', $data, $data, $data);
     }
     public function barang_keluar()
     {
         $keluar = new BarangKeluar();
+        $stok = new Stok;
+        $lokasi = new Lokasi;
+        
+        $data['lokasi']=$lokasi->findAll();
         $data['keluar']=$keluar->findAll();
+        $data['stokBarang']=$stok->findAll();
 
-        echo view('barang_keluar/barang_keluar', $data);
+        echo view('barang_keluar/barang_keluar', $data, $data);
     }
 
     public function penerimaan()
     {
         $penerimaan = new Penerimaan();
-        $data['penerimaan']=$penerimaan->findAll();
         $stok = new Stok;
-        $data['stokBarang']=$stok->findAll();
+        $lokasi = new Lokasi();
+        
+        $data['stokBarang']=$stok->findAll();        
+        $data['penerimaan']=$penerimaan->findAll();
+        $data['lokasi']=$lokasi->findAll();
 
-        return view('penerimaan/penerimaan', $data, $data);
+        return view('penerimaan/penerimaan', $data, $data, $data);
     }
 
     public function tambah_penerimaan()
@@ -322,6 +365,8 @@ class Home extends BaseController
         $satuan = $this->request->getPost('satuan');
         $from = $this->request->getPost('from');
         $harga = $this->request->getPost('harga');
+        // $format_harga = format_number($harga, 0, '', );
+        $jumlah = str_replace(".","",$harga);
 
         if($valid){
             $penerimaan->insert([
@@ -329,16 +374,62 @@ class Home extends BaseController
                 "qty" => $qty,
                 "satuan" => $satuan,
                 "from" => $from,
-                "harga" => $harga,
+                "harga" => $jumlah,
             ]);
         }
         return redirect('inventor/penerimaan');
     }
 
-    public function dlt_penerimaan($id)
+    //penerimaan barang accept
+    public function accept_penerimaan($id)
     {
         $penerimaan = new Penerimaan();
-        $penerimaan->delete($id);
+        $stok = new Stok();
+        $barang = new Barang();
+        $stok_pen = $penerimaan->where('id', $id)->first();
+        $get_stok = $stok->where('alias', $stok_pen['alias'])->first();
+        // $get_stok_all = $stok->findAll();
+                
+            if($get_stok !== null){
+
+                $do_accept = $stok->update($get_stok['id'],[
+                    'qty' => $get_stok['qty']+$stok_pen['qty']
+                ]);
+
+            $do_accept;
+
+            $barang->insert([
+                'alias' => $stok_pen['alias'],
+                'qty' => $stok_pen['qty'],
+                'created_by' => $stok_pen['from'],
+                'satuan' => $stok_pen['satuan'],
+                'deskripsi' => "Barang dari ". $stok_pen['from'],
+            ]);
+            
+            $penerimaan->update($id,[
+                'status' => 1
+            ]);
+            
+        }else{
+            // jika barang belum ada
+            $barang->insert([
+                'alias' => $stok_pen['alias'],
+                'qty' => $stok_pen['qty'],
+                'created_by' => $stok_pen['from'],
+                'satuan' => $stok_pen['satuan'],
+                'deskripsi' => "Barang dari ". $stok_pen['from'],
+
+            ]);
+            $stok->insert([
+                'alias' => $stok_pen['alias'],
+                'qty' => $stok_pen['qty'],
+            ]);
+
+            $penerimaan->update($id,[
+                'status' => 1
+            ]);
+        }
+
 
         return redirect('inventor/penerimaan');
 
@@ -347,18 +438,21 @@ class Home extends BaseController
     public function barang_masuk()
     {
         $barang = new Barang();
-        $data['barang'] = $barang->findAll();
         $stok = new Stok;
+        $lokasi = new Lokasi();
+        $data['barang'] = $barang->findAll();
         $data['stokBarang']=$stok->findAll();
+        $data['lokasi']=$lokasi->findAll();
 
 
-        echo view('barang_masuk/home', $data, $data);
+        echo view('barang_masuk/home', $data, $data, $data);
     }
 
     public function edit_brg_to_stok($id)
     {
 
         $barang = new Barang();
+        $stok = new Stok();
         // $data['id'] = $stok->where('id', $id)->first();
         $validation =  \Config\Services::validation();
         $validation->setRules([
@@ -372,7 +466,6 @@ class Home extends BaseController
         $satuan = $this->request->getPost('satuan');
         $deskripsi = $this->request->getPost('deskripsi');
         
-        $stok = new Stok();
         $qty_brg = $barang->where('id' , $id)->first();
         $get_stok = $stok->where('alias', $alias)->first();
         $stok_brg = $get_stok['qty'];
@@ -404,6 +497,80 @@ class Home extends BaseController
         }
         return redirect('inventor/barang/masuk');
     }
+
+    public function batal($id, $alias, $qty)
+    {
+        $pengiriman = new Pengiriman();
+        $stok = new Stok();
+        $catatan_laporan = new CatatanLaporan();
+
+        $get_stok = $stok->where('alias', $alias)->first();
+        // return json_encode($get_stok);
+        // $do_delete = $pengiriman->delete($id);    
+
+        // if($do_delete){
+            $stok->update($get_stok['id'],[
+                "qty" => $get_stok['qty']+$qty,
+            ]);
+        // }
+
+        $get_status = $pengiriman->where('id', $id)->first();
+        // return json_encode($get_status['status']);
+
+        $doFor_status = $pengiriman->update($get_status['id'],["status" => 2]);      
+
+        if($doFor_status){
+            $catatan_laporan->insert([
+                'alias'=> $get_status['alias'],
+                'qty'=> $get_status['qty'],
+                'satuan'=> $get_status['satuan'],
+                'tujuan'=> $get_status['tujuan'],
+                'deskripsi'=> $get_status['deskripsi'],
+                'status' => 2
+            ]);
+
+            $this->returnJson(array('status' => 'ok'));
+        }else{
+            $this->returnJson(array('status' => 'false'));
+        }
+        
+        return redirect('inventor/pengiriman');
+    }
+       
+    public function cancel_penerimaan($id)
+    {
+        $penerimaan = new Penerimaan();
+        // return json_encode($id);
+        $penerimaan->update($id,[
+            'status' => 2
+        ]);
+
+        return redirect('inventor/penerimaan');
+    }
+
+    // tambah lokasi penerima
+    public function add_location()
+    {
+        $lokasi = new Lokasi();
+        $validation = \Config\Services::validation();
+        $validation->setRules(['nama' => 'required']);
+        $nama = $this->request->getPost('nama');
+        $alamat = $this->request->getPost('alamat');
+        $isvalid = $validation->withRequest($this->request)->run();
+
+
+        if($isvalid){
+            $lokasi->insert([
+                'nama' => $nama,
+                'alamat' => $alamat
+            ]);
+        }else{
+            return "validation not correct";
+        }
+
+        return redirect('inventor');
+    }
+
 }
 
 

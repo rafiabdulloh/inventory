@@ -9,6 +9,6 @@ class CatatanLaporan extends Model
     protected $primaryKey = 'id';
 
     protected $useAutoIncrement = true;
-    protected $allowedFields = ['alias', 'qty', 'tujuan', 'satuan', 'deskripsi', 'date_created'];
+    protected $allowedFields = ['alias', 'qty', 'tujuan', 'satuan', 'deskripsi','status', 'date_created','status'];
 
 }

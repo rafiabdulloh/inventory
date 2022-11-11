@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href=<?= base_url('css/style.css')?>>
 	<link rel="stylesheet" href=<?= base_url('/css/style.sdb.css')?>>
 	<link rel="stylesheet" href=<?= base_url('/css/bootstrap.min.sdb.css')?>>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/list/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <?=$this->include('main/navbar')?>
 <body>
@@ -22,7 +22,7 @@
 				</div>
 				<div id="content" style="padding-top:20px; padding-left:60px; padding-right:60px; margin-top:60px" >
                 <h1>Laporan dari Pengiriman Barang</h1>
-                   <table class="table-bordered table table-hover box">
+                   <table class="table-bordered table table-hover box table-scroll">
                     <thead>
                         <th>No</th>
                         <th>Name</th>
@@ -31,22 +31,27 @@
                         <th>Tujuan</th>
                         <th>Deskripsi</th>
                         <th>Tanggal</th>
-                        <th>Action</th>
+                        <th>Status</th>
                     </thead>
                     <tbody>
-                        <?php $no=1; foreach($laporan as $dist):?>
+                        <?php $no=1; foreach($laporan as $list):
+                            $a =$list['status'];
+                            switch($a){
+                             case 0: $a = "<span style='background-color:green; color: white !important' class='btn'>Pending</span>";break;
+                             case 1: $a = "<span class='btn btn-primary'>Success</span>";break;
+                             case 2: $a = "<span class='btn btn-danger'>Canceled</span>";break;
+                            }
+                            ?>
                         <tr>
                             <td><?= $no?></td>
-                            <td style="text-transform:capitalize"><?= $dist['alias']?></td>
-                            <td><?= $dist['qty']?></td>
-                            <td><?= $dist['satuan']?></td>
-                            <td style="text-transform:capitalize"><?= $dist['tujuan']?></td>
-                            <td><?= $dist['deskripsi']?></td>
-                            <td><?= $dist['date_created']?></td>
+                            <td style="text-transform:capitalize"><?= $list['alias']?></td>
+                            <td><?= $list['qty']?></td>
+                            <td><?= $list['satuan']?></td>
+                            <td style="text-transform:capitalize"><?= $list['tujuan']?></td>
+                            <td><?= $list['deskripsi']?></td>
+                            <td><?= $list['date_created']?></td>
                             <td>
-                                <a href="" class="btn btn-inline-primary">
-                                    Selesai
-                                </a>
+                                <?= $a?>
                             </td>
                         </tr>
                         <?php $no++; endforeach?>

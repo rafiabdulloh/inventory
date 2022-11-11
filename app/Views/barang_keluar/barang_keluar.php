@@ -31,7 +31,6 @@
                         <th>Tujuan</th>
                         <th>Deskripsi</th>
                         <th>Tanggal</th>
-                        <th>Action</th>
                     </thead>
                     <tbody>
                         <?php $no=1; foreach($keluar as $dist):?>
@@ -43,16 +42,14 @@
                             <td style="text-transform:capitalize"><?= $dist['tujuan']?></td>
                             <td><?= $dist['deskripsi']?></td>
                             <td><?= $dist['date_created']?></td>
-                            <td>
-                                <a href="" class="btn btn-inline-primary">
-                                    Selesai
-                                </a>
-                            </td>
                         </tr>
                         <?php $no++; endforeach?>
                     </tbody>
                    </table>
 			</div>
+            <div>
+			    <?= $this->include('main/tambah-barang')?>
+            </div>
 		</div>
 		<?= $this->include('main/footer')?>
     </body>

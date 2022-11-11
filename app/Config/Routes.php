@@ -50,10 +50,13 @@ $routes->add('/inventor/catatan/laporan', 'Base\Home::catatan_laporan');
 $routes->add('/inventor/barang/keluar', 'Base\Home::barang_keluar');
 $routes->add('/inventor/penerimaan', 'Base\Home::penerimaan');
 $routes->add('/tambah/penerimaan', 'Base\Home::tambah_penerimaan');
-$routes->add('/delete/penerimaan/(:num)', 'Base\Home::dlt_penerimaan/$1');
+$routes->add('/accept/penerimaan/(:num)', 'Base\Home::accept_penerimaan/$1');
 $routes->add('/inventor/barang', 'Base\Home::barang');
 $routes->add('/inventor/barang/masuk', 'Base\Home::barang_masuk');
 $routes->add('/edit/barang/(:num)', 'Base\Home::edit_brg_to_stok/$1');
+$routes->add('/batal/(:num)/(:any)/(:num)', 'Base\Home::batal/$1/$2/$3');
+$routes->add('/cancel/penerimaan/(:num)', 'Base\Home::cancel_penerimaan/$1');
+$routes->add('/add/lokasi', 'Base\Home::add_location');
 
 
 /*

@@ -19,6 +19,7 @@
 				</div>
 				<div id="content" class="parent" >
 					<div class="table">
+						
 						<table>
 							<th rowspan="2" id="" class="penerimaan">
 								<a href="/inventor/penerimaan" style="color:black">
@@ -27,7 +28,7 @@
 										<td class="penerimaan">
 											<a href="/inventor/penerimaan" style="color:black">penerimaan</a>
 										</td>
-										<td class="penerimaan">0</td>
+										<td class="penerimaan"><?= count($penerimaan)?></td>
 								</a>
 							</th>
 							<th rowspan="2" id="barang" class="barang">
@@ -63,10 +64,19 @@
 							</th>
 						</table>
 					</div>
-					<div>
-						<?= $this->include('main/tambah-barang')?>
+					<!-- body -->
+					
+					<div class="body-dua">
+						<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut voluptate, rem officia ipsam illo fugit incidunt provident assumenda, velit magnam odio excepturi repellat accusamus. Quae dolore beatae totam cum fugiat.
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem sapiente culpa adipisci odio facere beatae. Nesciunt fuga nisi, aperiam consectetur fugiat reprehenderit, veritatis similique dolorum saepe iusto labore vero ducimus.
+							Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam placeat repellendus corrupti rem amet maiores itaque, ipsa dolorem repudiandae cumque pariatur rerum recusandae nostrum animi ullam commodi iste, alias dolore?
+							<nav class="navbar navbar-expand-lg navbar-light bg-light bg-clr">
+
+						</div>
+							<?= $this->include('main/tambah-barang')?>
+						</div>
+						<?= $this->include('main/history')?>
 					</div>
-					<?= $this->include('main/history')?>
 				</div>
 			</div>
 		</div>

@@ -96,18 +96,12 @@
 	</div>
 		<?= $this->include('main/footer')?>
 </body>
-        <script src=<?= base_url('js/font-icon.js')?>></script>
-        <script src=<?= base_url('js/jquery.min.sdb.js')?>></script>
-        <script src=<?= base_url('js/jquery.js')?>></script>
-        <script src=<?= base_url('js/popper.sdb.js')?>></script>
-        <script src=<?= base_url('js/bootstrap.min.sdb.js')?>></script>
-        <script src=<?= base_url('js/main.sdb.js')?>></script>
-        <script src=<?= base_url('js/inventory.home.js')?>></script>
-        <script src=<?= base_url('js/jquery.min.sdb.js')?>></script>
-        <script src=<?= base_url('js/jquery.min.sdb.js')?>></script>
-		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="//code.jquery.com/jquery.min.js"></script>
+$lokasi = new Lokasi();
+
+$data['lokasi']=$lokasi->findAll();
+$lokasi = new Lokasi();
+
+$data['lokasi']=$lokasi->findAll();
 </html>
 
 

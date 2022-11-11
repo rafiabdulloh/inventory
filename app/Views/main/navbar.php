@@ -1,4 +1,5 @@
 <nav class="nav bg-clr">
+
 		<ul class="nav flex-row" >
 		  <li class="nav-item">
 			<a class="nav-link white btn-outline-primary tmbh-stok" href="/inventor">Dashboard</a>
@@ -34,12 +35,6 @@
     	    		Stok
     			</button>
 			</a>
-		  </li>
-		  <li class="nav-item">
-			<div class="profil">
-				<span class="font-profil">Profil</span>
-				<img src=<?= base_url('image/barang.png')?> alt="" width="60px" height="60px">
-			</div>
 		  </li>
 		</ul>
 </nav>

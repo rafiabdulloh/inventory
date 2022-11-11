@@ -1,4 +1,4 @@
-<div id="kirim" class="modal fade" role="dialog">
+<!-- <div id="kirim" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="margin-top:80px">
             <div class="modal-header">
@@ -50,3 +50,4 @@
         </div>
     </div>
 </div>
+  -->

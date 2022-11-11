@@ -1,11 +1,11 @@
-<nav id="sidebar" class="sidebar" style="position: relative;top: -18px;">
+<nav id="sidebar" class="sidebar this-sidebar" style="position: relative;top: -18px;">
 	<div class="custom-menu btn-sidebar">
-		<button type="button" id="sidebarCollapse" class="btn btn-primary">
+		<button type="button" id="sidebarCollapse" class="btn btn-danger">
 	        <i class="fa fa-bars"></i>
 	        <span class="sr-only">Toggle Menu</span>
 	    </button>
     </div>
-	<div class="p-4 pt-5" style="height: 100vh">
+	<div class="p-4 pt-5" style="height: 100vh;">
 		<h1><a class="logo">Agrioduct</a></h1>
 	        <ul class="list-unstyled components mb-5">
 			<li>

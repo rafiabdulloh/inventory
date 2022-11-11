@@ -143,8 +143,8 @@
     margin-top:58px
 }
 .profil{
-    right:2px;
-    position: absolute  ;
+    /* z-index: 3; */
+    position: absolute;
 }
 .font-profil{
     color:white;
@@ -154,4 +154,44 @@
 .btn-sidebar{
     position:absolute !important;
     top: 21px !important;
+}
+.table-scroll{
+    display: block;
+    overflow: auto;
+    height: 1000px;
+    width: max-content !important;
+}
+.gv-act{
+    background-color: teal;
+    color:white;
+    border-radius: 7px;
+    padding: 8px;
+    display: block;
+    text-align: center;   
+}
+.act{
+    background-color: #1a79e6 !important;
+    min-width: -webkit-fill-available;
+    display: inline-block;
+    margin-bottom: 5px;
+    color: white !important;
+}
+.act-cancel{
+    width:-webkit-fill-available
+}
+.pending{
+    background-color:green !important;
+    color: white !important;
+    width:-webkit-fill-available
+
+}
+.this-sidebar{
+    background-color:#2a6398 !important;
+}
+.navbar-expand-lg{
+    flex-flow: wrap !important;
+}
+.item-inv{
+    display:inline-flex;
+    margin-bottom: 10px;
 }

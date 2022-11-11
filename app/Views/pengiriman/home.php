@@ -30,11 +30,19 @@
                         <th>Satuan</th>
                         <th>Tujuan</th>
                         <th>Deskripsi</th>
+                        <th>Status</th>
                         <th>Tanggal</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <?php $no=1; foreach($pengiriman as $dist):?>
+                        <?php $no=1; foreach($pengiriman as $dist):
+                        $a = $dist['status'];
+                        switch($a){
+                            case 0: $a = "<span class='btn pending'>Pending</span>";break;
+                            case 1: $a = "<span class='btn act'>Success</span>";break;
+                            case 2: $a = "<span class='btn btn-danger act-cancel'>Canceled</span>";break;
+                        }
+                            ?>
                         <tr>
                             <td><?= $no?></td>
                             <td style="text-transform:capitalize"><?= $dist['alias']?></td>
@@ -42,11 +50,30 @@
                             <td><?= $dist['satuan']?></td>
                             <td style="text-transform:capitalize"><?= $dist['tujuan']?></td>
                             <td><?= $dist['deskripsi']?></td>
+                            <td><?= $a ?></td>
                             <td><?= $dist['date_created']?></td>
                             <td>
-                                <a href="/status/pengiriman/<?= $dist['id']?>" class="btn btn-inline-primary">
-                                    Selesai
-                                </a>
+                                <span>
+                                    <?php $b = $dist['status'];
+                                        if($b != 1 && $b != 2){
+                                            echo "<a href='#' id='status-success'
+                                                    data-id='".$dist['id']."'
+                                                    class='btn btn-primary act'>Selesai</a>";
+                                        }else{
+                                            echo "<span class='gv-act'>Telah Diberi Tindakan</span>";
+                                        }
+                                    ?>
+                                <span>
+                                    <?php $b = $dist['status'];
+                                        if($b != 1 && $b != 2){
+                                            echo "<a href='#' id='status-canceled' data-url='/batal/". $dist['id']."/".$dist['alias']."/".$dist['qty']."'
+                                                data-qty='".$dist['qty']."'
+                                                data-id='".$dist['id']."'
+                                                data-alias='".$dist['alias']."'
+                                                class='btn btn-danger act-cancel'>Batalkan</a>";
+                                        }
+                                        ?>
+                                </span>
                             </td>
                         </tr>
                         <?php $no++; endforeach?>
